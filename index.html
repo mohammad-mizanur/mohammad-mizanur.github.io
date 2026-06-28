@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Md. Mizanur Rahman — Network Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--navy:#0D1B2A;--steel:#1A2E45;--panel:#1E3A5F;
+--cyan:#00C2CB;--cyan-dim:#00909A;
+--white:#F0F4F8;--muted:#8A9BB0;--dim:#4A5E72;
+--mono:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--white);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;background:rgba(13,27,42,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,194,203,0.12)}
+.nav-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;color:var(--cyan);letter-spacing:0.04em}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.85rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;transition:color 0.2s}
+.nav-links a:hover{color:var(--cyan)}
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;padding:6rem 2rem 4rem;overflow:hidden}
+canvas#net{position:absolute;inset:0;opacity:0.35;pointer-events:none}
+.hero-inner{position:relative;z-index:2;max-width:800px;margin:0 auto}
+.hero-eyebrow{font-family:var(--mono);font-size:0.8rem;color:var(--cyan);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem}
+.hero-eyebrow::before{content:'';display:block;width:32px;height:1px;background:var(--cyan)}
+h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.4rem,6vw,4.2rem);font-weight:700;line-height:1.08;margin-bottom:1.5rem;letter-spacing:-0.02em}
+h1 .accent{color:var(--cyan)}
+.hero-sub{font-size:1.05rem;color:var(--muted);max-width:520px;line-height:1.75;margin-bottom:2.5rem}
+.hero-tags{display:flex;flex-wrap:wrap;gap:0.6rem;margin-bottom:3rem}
+.tag{font-family:var(--mono);font-size:0.7rem;padding:0.35rem 0.85rem;border:1px solid rgba(0,194,203,0.3);border-radius:2px;color:var(--cyan-dim);letter-spacing:0.08em}
+.btn-row{display:flex;gap:1rem;flex-wrap:wrap}
+.btn{padding:0.75rem 1.75rem;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.9rem;text-decoration:none;border-radius:3px;transition:all 0.2s;cursor:pointer;border:none}
+.btn-primary{background:var(--cyan);color:var(--navy)}
+.btn-primary:hover{background:#00d9e3;transform:translateY(-2px)}
+.btn-outline{border:1px solid rgba(0,194,203,0.4);color:var(--cyan);background:transparent}
+.btn-outline:hover{border-color:var(--cyan);background:rgba(0,194,203,0.08)}
+section{padding:5rem 2rem;max-width:1000px;margin:0 auto}
+.section-label{font-family:var(--mono);font-size:0.72rem;color:var(--cyan);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:0.75rem}
+h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;margin-bottom:2.5rem;color:var(--white)}
+.divider{width:100%;height:1px;background:rgba(255,255,255,0.06);margin:0}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.about-text p{color:var(--muted);margin-bottom:1rem;line-height:1.8}
+.about-text p strong{color:var(--white)}
+.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.stat-box{background:var(--steel);border:1px solid rgba(0,194,203,0.12);border-radius:4px;padding:1.25rem}
+.stat-num{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:var(--cyan)}
+.stat-label{font-size:0.8rem;color:var(--muted);margin-top:0.25rem}
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
+.cert-card{background:var(--steel);border:1px solid rgba(0,194,203,0.1);border-radius:4px;padding:1.25rem;transition:border-color 0.2s,transform 0.2s}
+.cert-card:hover{border-color:rgba(0,194,203,0.4);transform:translateY(-3px)}
+.cert-vendor{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.15em;color:var(--cyan-dim);text-transform:uppercase;margin-bottom:0.5rem}
+.cert-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.95rem;color:var(--white)}
+.skills-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem}
+.skill-group h3{font-family:'Space Grotesk',sans-serif;font-size:0.9rem;font-weight:600;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:1rem}
+.skill-item{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.85rem}
+.skill-name{font-size:0.9rem;color:var(--white)}
+.skill-bar{flex:1;height:3px;background:rgba(255,255,255,0.08);border-radius:2px;margin:0 1rem;overflow:hidden}
+.skill-fill{height:100%;background:var(--cyan);border-radius:2px}
+.skill-pct{font-family:var(--mono);font-size:0.72rem;color:var(--cyan-dim);min-width:2.5rem;text-align:right}
+.timeline{position:relative;padding-left:2rem}
+.timeline::before{content:'';position:absolute;left:0;top:6px;bottom:0;width:1px;background:rgba(0,194,203,0.2)}
+.exp-item{position:relative;margin-bottom:3rem}
+.exp-item::before{content:'';position:absolute;left:-2.42rem;top:6px;width:10px;height:10px;border-radius:50%;background:var(--cyan);border:2px solid var(--navy)}
+.exp-role{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;color:var(--white)}
+.exp-org{color:var(--cyan-dim);font-size:0.9rem;margin-top:0.2rem}
+.exp-period{font-family:var(--mono);font-size:0.72rem;color:var(--muted);margin-top:0.25rem;letter-spacing:0.08em}
+.exp-desc{color:var(--muted);font-size:0.92rem;line-height:1.75;margin-top:0.75rem;list-style:none;padding:0}
+.exp-desc li{margin-bottom:0.4rem;padding-left:0.75rem;position:relative}
+.exp-desc li::before{content:'▸';position:absolute;left:0;color:var(--cyan-dim);font-size:0.75rem}
+
+/* TRAINING SECTION */
+.training-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.slideshow{position:relative;border-radius:6px;overflow:hidden;background:var(--steel);aspect-ratio:16/10}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity 0.8s ease}
+.slide.active{opacity:1}
+.slide img{width:100%;height:100%;object-fit:cover}
+.slide-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem;background:var(--steel);border:1px dashed rgba(0,194,203,0.2)}
+.slide-placeholder span{font-family:var(--mono);font-size:0.7rem;color:var(--dim);letter-spacing:0.1em}
+.slide-placeholder svg{width:36px;height:36px;stroke:var(--dim);fill:none;stroke-width:1.5}
+.slide-dots{display:flex;justify-content:center;gap:6px;margin-top:0.85rem}
+.dot{width:6px;height:6px;border-radius:50%;background:rgba(0,194,203,0.2);cursor:pointer;transition:background 0.2s}
+.dot.active{background:var(--cyan)}
+.slide-arrows{position:absolute;bottom:12px;right:12px;display:flex;gap:6px;z-index:2}
+.slide-arrow{width:28px;height:28px;border-radius:50%;background:rgba(13,27,42,0.7);border:1px solid rgba(0,194,203,0.3);color:var(--cyan);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.75rem;transition:all 0.2s}
+.slide-arrow:hover{background:rgba(0,194,203,0.2)}
+.training-stories{display:flex;flex-direction:column;gap:1.75rem}
+.story-item{padding-left:1rem;border-left:2px solid rgba(0,194,203,0.2);transition:border-color 0.3s}
+.story-item.active{border-left-color:var(--cyan)}
+.story-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1rem;color:var(--white);margin-bottom:0.3rem}
+.story-audience{font-family:var(--mono);font-size:0.68rem;color:var(--cyan-dim);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem}
+.story-text{font-size:0.88rem;color:var(--muted);line-height:1.75}
+
+.contact-inner{text-align:center;padding:4rem 2rem}
+.contact-inner p{color:var(--muted);margin-bottom:2.5rem;font-size:1.05rem}
+.contact-links{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}
+.contact-link{display:flex;align-items:center;gap:0.6rem;padding:0.7rem 1.4rem;border:1px solid rgba(0,194,203,0.25);border-radius:3px;color:var(--muted);text-decoration:none;font-size:0.88rem;transition:all 0.2s}
+.contact-link:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,194,203,0.07)}
+.contact-link svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+footer{border-top:1px solid rgba(255,255,255,0.06);padding:2rem;text-align:center;color:var(--dim);font-family:var(--mono);font-size:0.72rem;letter-spacing:0.06em}
+@media(max-width:640px){
+.about-grid,.skills-wrapper,.stat-row,.training-layout{grid-template-columns:1fr}
+nav{padding:0.85rem 1rem}
+.nav-links{gap:1rem}
+h1{font-size:2.2rem}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">MR</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#certs">Certs</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#training">Training</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <canvas id="net"></canvas>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Network Engineer &amp; IT Leader</div>
+    <h1>Md. Mizanur <span class="accent">Rahman</span></h1>
+    <p class="hero-sub">13+ years architecting reliable networks in the ISP sector. CCNP Enterprise certified, leading distributed engineering teams and driving technical excellence across organisations.</p>
+    <div class="hero-tags">
+      <span class="tag">CCNP Enterprise</span>
+      <span class="tag">Cisco · MikroTik · Fortinet</span>
+      <span class="tag">ISP Infrastructure</span>
+      <span class="tag">Team Leadership</span>
+      <span class="tag">Trainer & Presenter</span>
+    </div>
+    <div class="btn-row">
+      <a href="#experience" class="btn btn-primary">View Experience</a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<section id="about">
+  <div class="section-label">// about</div>
+  <h2>Who I Am</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm a network engineering professional with over <strong>13 years</strong> in the ISP sector, specialising in enterprise network operations, complaint management, and team leadership.</p>
+      <p>At <strong>Link3 Technologies Ltd.</strong>, I serve as Assistant Manager — Technical Support & Complaint Management, overseeing a distributed team of <strong>60+ field engineers</strong> across Bangladesh.</p>
+      <p>Beyond operations, I co-founded <strong>DeutschRoute</strong>, a German language training program, reflecting my passion for education and knowledge sharing across disciplines.</p>
+    </div>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">13+</div><div class="stat-label">Years in ISP / Networking</div></div>
+      <div class="stat-box"><div class="stat-num">60+</div><div class="stat-label">Engineers Led</div></div>
+      <div class="stat-box"><div class="stat-num">B2</div><div class="stat-label">German Language Level</div></div>
+      <div class="stat-box"><div class="stat-num">6+</div><div class="stat-label">Certifications</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="certs">
+  <div class="section-label">// certifications</div>
+  <h2>Credentials</h2>
+  <div class="cert-grid">
+    <div class="cert-card"><div class="cert-vendor">Cisco</div><div class="cert-name">CCNA</div></div>
+    <div class="cert-card"><div class="cert-vendor">Cisco</div><div class="cert-name">CCNP Enterprise</div></div>
+    <div class="cert-card"><div class="cert-vendor">MikroTik</div><div class="cert-name">MTCNA</div></div>
+    <div class="cert-card"><div class="cert-vendor">Fortinet</div><div class="cert-name">FCF &amp; FCA</div></div>
+    <div class="cert-card"><div class="cert-vendor">Fortinet</div><div class="cert-name">FCP FortiManager 7.6</div></div>
+    <div class="cert-card"><div class="cert-vendor">Juniper</div><div class="cert-name">JNCIA-Junos</div></div>
+  </div>
+
+  <div style="margin-top:3rem">
+    <div class="section-label" style="margin-bottom:1.5rem">// technical skills</div>
+    <div class="skills-wrapper">
+      <div class="skill-group">
+        <h3>Routing &amp; Switching</h3>
+        <div class="skill-item"><span class="skill-name">OSPF / EIGRP / BGP</span><div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div><span class="skill-pct">90%</span></div>
+        <div class="skill-item"><span class="skill-name">MPLS / SD-WAN</span><div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div><span class="skill-pct">80%</span></div>
+        <div class="skill-item"><span class="skill-name">MikroTik RouterOS</span><div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div><span class="skill-pct">88%</span></div>
+        <div class="skill-item"><span class="skill-name">GNS3 / Network Lab</span><div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div><span class="skill-pct">85%</span></div>
+      </div>
+      <div class="skill-group">
+        <h3>Security &amp; Management</h3>
+        <div class="skill-item"><span class="skill-name">Fortinet FortiGate</span><div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div><span class="skill-pct">82%</span></div>
+        <div class="skill-item"><span class="skill-name">FortiManager</span><div class="skill-bar"><div class="skill-fill" style="width:72%"></div></div><span class="skill-pct">72%</span></div>
+        <div class="skill-item"><span class="skill-name">NOC / Complaint Mgmt</span><div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div><span class="skill-pct">95%</span></div>
+        <div class="skill-item"><span class="skill-name">Team Leadership</span><div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div><span class="skill-pct">92%</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="experience">
+  <div class="section-label">// experience</div>
+  <h2>Career Timeline</h2>
+  <div class="timeline">
+    <div class="exp-item">
+      <div class="exp-role">Assistant Manager — Technical Support &amp; Complaint Management</div>
+      <div class="exp-org">Link3 Technologies Ltd.</div>
+      <div class="exp-period">2017 – PRESENT · CHITTAGONG, BANGLADESH</div>
+      <ul class="exp-desc">
+        <li>Lead and manage a distributed team of 60+ field engineers across multiple regions</li>
+        <li>Own end-to-end complaint resolution pipeline, reducing MTTR through structured workflows</li>
+        <li>Design and maintain enterprise network infrastructure for ISP clients</li>
+        <li>Drive certification and upskilling programs within the technical team</li>
+      </ul>
+    </div>
+    <div class="exp-item">
+      <div class="exp-role">Senior Network Engineer</div>
+      <div class="exp-org">ISP Sector, Bangladesh</div>
+      <div class="exp-period">2012 – 2017 · 5 YEARS</div>
+      <ul class="exp-desc">
+        <li>Configured and maintained enterprise routing protocols: OSPF, EIGRP, BGP</li>
+        <li>Deployed and managed MikroTik and Cisco-based backbone networks</li>
+        <li>Provided second- and third-level technical escalation support</li>
+      </ul>
+    </div>
+    <div class="exp-item">
+      <div class="exp-role">Co-Founder &amp; Instructor</div>
+      <div class="exp-org">DeutschRoute — German Language Program</div>
+      <div class="exp-period">2023 – PRESENT</div>
+      <ul class="exp-desc">
+        <li>Designed full A1–B1 German curriculum with structured lecture materials</li>
+        <li>Built and manage a WhatsApp community of 30+ active learners</li>
+        <li>Partner collaboration with Ping-BD IT center on 50/50 revenue share model</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="training">
+  <div class="section-label">// training & presentations</div>
+  <h2>Knowledge in Action</h2>
+  <div class="training-layout">
+    <div>
+      <div class="slideshow" id="slideshow">
+        <div class="slide active">
+          <div class="slide-placeholder">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>photo1.jpg</span>
+          </div>
+        </div>
+        <div class="slide">
+          <div class="slide-placeholder">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>photo2.jpg</span>
+          </div>
+        </div>
+        <div class="slide">
+          <div class="slide-placeholder">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>photo3.jpg</span>
+          </div>
+        </div>
+        <div class="slide">
+          <div class="slide-placeholder">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>photo4.jpg</span>
+          </div>
+        </div>
+        <div class="slide">
+          <div class="slide-placeholder">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>photo5.jpg</span>
+          </div>
+        </div>
+        <div class="slide">
+          <div class="slide-placeholder">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>photo6.jpg</span>
+          </div>
+        </div>
+        <div class="slide-arrows">
+          <button class="slide-arrow" onclick="changeSlide(-1)">&#8592;</button>
+          <button class="slide-arrow" onclick="changeSlide(1)">&#8594;</button>
+        </div>
+      </div>
+      <div class="slide-dots" id="dots">
+        <div class="dot active" onclick="goToSlide(0)"></div>
+        <div class="dot" onclick="goToSlide(1)"></div>
+        <div class="dot" onclick="goToSlide(2)"></div>
+        <div class="dot" onclick="goToSlide(3)"></div>
+        <div class="dot" onclick="goToSlide(4)"></div>
+        <div class="dot" onclick="goToSlide(5)"></div>
+      </div>
+    </div>
+
+    <div class="training-stories" id="stories">
+      <div class="story-item active">
+        <div class="story-title">Customer Service Excellency</div>
+        <div class="story-audience">Cross-Team Managers</div>
+        <div class="story-text">Standing in front of a room full of managers from different departments, I walked them through what truly excellent customer service looks like — not just as a concept, but as a culture. The session challenged the team to rethink how they respond, communicate, and own customer problems end to end.</div>
+      </div>
+      <div class="story-item">
+        <div class="story-title">How to Handle Customers</div>
+        <div class="story-audience">Team Members</div>
+        <div class="story-text">Real situations, real conversations. I designed this session around the moments my teammates actually face — difficult calls, frustrated clients, and unclear expectations. We worked through practical techniques to stay calm, communicate clearly, and turn a complaint into confidence.</div>
+      </div>
+      <div class="story-item">
+        <div class="story-title">MTCNA Training</div>
+        <div class="story-audience">Team Members</div>
+        <div class="story-text">MikroTik is at the backbone of our network, yet not everyone had the same depth of understanding. I took my teammates through the MTCNA curriculum — routing, switching, wireless, and firewall fundamentals — turning theory into hands-on confidence for daily operations.</div>
+      </div>
+      <div class="story-item">
+        <div class="story-title">Network Rack Management</div>
+        <div class="story-audience">Team Members</div>
+        <div class="story-text">A messy rack is a ticking problem. This session covered the physical layer that engineers often overlook — how to properly organise servers, switches, OLT equipment, and cabling inside a rack. Clean infrastructure means faster troubleshooting, fewer errors, and a more professional operation.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-label" style="text-align:center;margin-bottom:1rem">// contact</div>
+    <h2 style="text-align:center;margin-bottom:1rem">Open to Opportunities</h2>
+    <p>Let's connect — whether it's a project, a role, or just a conversation about networking.</p>
+    <div class="contact-links">
+      <a href="https://linkedin.com/in/YOUR-LINKEDIN" class="contact-link">
+        <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+        LinkedIn
+      </a>
+      <a href="mailto:YOUR-EMAIL@gmail.com" class="contact-link">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+        Email
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>Md. Mizanur Rahman &nbsp;·&nbsp; Network Engineer &nbsp;·&nbsp; Chittagong, Bangladesh</footer>
+
+<script>
+const canvas=document.getElementById('net');
+const ctx=canvas.getContext('2d');
+let W,H,nodes=[];
+const N=55;
+function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;}
+function init(){resize();nodes=Array.from({length:N},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-0.5)*0.45,vy:(Math.random()-0.5)*0.45,r:1.5+Math.random()*1.5}));}
+function draw(){ctx.clearRect(0,0,W,H);const D=130;for(let i=0;i<nodes.length;i++){for(let j=i+1;j<nodes.length;j++){const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y;const dist=Math.sqrt(dx*dx+dy*dy);if(dist<D){ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);ctx.strokeStyle=`rgba(0,194,203,${(1-dist/D)*0.35})`;ctx.lineWidth=0.7;ctx.stroke();}}}nodes.forEach(n=>{ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);ctx.fillStyle='rgba(0,194,203,0.7)';ctx.fill();n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>W)n.vx*=-1;if(n.y<0||n.y>H)n.vy*=-1;});requestAnimationFrame(draw);}
+window.addEventListener('resize',resize);
+init();draw();
+
+let current=0;
+const slides=document.querySelectorAll('.slide');
+const dots=document.querySelectorAll('.dot');
+const stories=document.querySelectorAll('.story-item');
+let timer=setInterval(()=>changeSlide(1),4000);
+
+function goToSlide(n){
+  slides[current].classList.remove('active');
+  dots[current].classList.remove('active');
+  stories[current%stories.length].classList.remove('active');
+  current=n;
+  slides[current].classList.add('active');
+  dots[current].classList.add('active');
+  stories[current%stories.length].classList.add('active');
+}
+
+function changeSlide(dir){
+  clearInterval(timer);
+  goToSlide((current+dir+slides.length)%slides.length);
+  timer=setInterval(()=>changeSlide(1),4000);
+}
+</script>
+</body>
+</html>
