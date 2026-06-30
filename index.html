@@ -8,38 +8,60 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
---navy:#0D1B2A;--steel:#1A2E45;--panel:#1E3A5F;
+--navy:#0D1B2A;--steel:#1A2E45;
 --cyan:#00C2CB;--cyan-dim:#00909A;
 --white:#F0F4F8;--muted:#8A9BB0;--dim:#4A5E72;
 --mono:'JetBrains Mono',monospace;
 }
 html{scroll-behavior:smooth}
 body{background:var(--navy);color:var(--white);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;background:rgba(13,27,42,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,194,203,0.12)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;background:rgba(13,27,42,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,194,203,0.12)}
 .nav-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;color:var(--cyan);letter-spacing:0.04em}
 .nav-links{display:flex;gap:2rem;list-style:none}
 .nav-links a{color:var(--muted);text-decoration:none;font-size:0.85rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;transition:color 0.2s}
 .nav-links a:hover{color:var(--cyan)}
+
+/* HERO */
 .hero{min-height:100vh;display:flex;align-items:center;position:relative;padding:6rem 2rem 4rem;overflow:hidden}
-canvas#net{position:absolute;inset:0;opacity:0.35;pointer-events:none}
-.hero-inner{position:relative;z-index:2;max-width:800px;margin:0 auto}
+
+/* HERO BG SLIDESHOW */
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.5s ease;background-size:cover;background-position:center}
+.hero-bg-slide.active{opacity:1}
+.hero-bg-overlay{position:absolute;inset:0;background:rgba(13,27,42,0.72);z-index:1}
+
+canvas#net{position:absolute;inset:0;z-index:2;opacity:0;transition:opacity 1s ease;pointer-events:none}
+canvas#net.visible{opacity:0.4}
+
+.hero-inner{position:relative;z-index:3;max-width:800px;margin:0 auto}
 .hero-eyebrow{font-family:var(--mono);font-size:0.8rem;color:var(--cyan);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem}
 .hero-eyebrow::before{content:'';display:block;width:32px;height:1px;background:var(--cyan)}
 h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.4rem,6vw,4.2rem);font-weight:700;line-height:1.08;margin-bottom:1.5rem;letter-spacing:-0.02em}
 h1 .accent{color:var(--cyan)}
-.hero-sub{font-size:1.05rem;color:var(--muted);max-width:520px;line-height:1.75;margin-bottom:2.5rem}
+.hero-sub{font-size:1.05rem;color:rgba(240,244,248,0.85);max-width:520px;line-height:1.75;margin-bottom:2.5rem}
 .hero-tags{display:flex;flex-wrap:wrap;gap:0.6rem;margin-bottom:3rem}
-.tag{font-family:var(--mono);font-size:0.7rem;padding:0.35rem 0.85rem;border:1px solid rgba(0,194,203,0.3);border-radius:2px;color:var(--cyan-dim);letter-spacing:0.08em}
+.tag{font-family:var(--mono);font-size:0.7rem;padding:0.35rem 0.85rem;border:1px solid rgba(0,194,203,0.4);border-radius:2px;color:var(--cyan);letter-spacing:0.08em;background:rgba(13,27,42,0.4)}
 .btn-row{display:flex;gap:1rem;flex-wrap:wrap}
 .btn{padding:0.75rem 1.75rem;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.9rem;text-decoration:none;border-radius:3px;transition:all 0.2s;cursor:pointer;border:none}
 .btn-primary{background:var(--cyan);color:var(--navy)}
 .btn-primary:hover{background:#00d9e3;transform:translateY(-2px)}
-.btn-outline{border:1px solid rgba(0,194,203,0.4);color:var(--cyan);background:transparent}
-.btn-outline:hover{border-color:var(--cyan);background:rgba(0,194,203,0.08)}
+.btn-outline{border:1px solid rgba(0,194,203,0.5);color:var(--cyan);background:rgba(13,27,42,0.4)}
+.btn-outline:hover{border-color:var(--cyan);background:rgba(0,194,203,0.12)}
+
+/* HERO SLIDE DOTS */
+.hero-dots{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:4;display:flex;gap:8px}
+.hero-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.3);cursor:pointer;transition:background 0.3s}
+.hero-dot.active{background:var(--cyan)}
+
+/* SECTIONS */
 section{padding:5rem 2rem;max-width:1000px;margin:0 auto}
 .section-label{font-family:var(--mono);font-size:0.72rem;color:var(--cyan);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:0.75rem}
 h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;margin-bottom:2.5rem;color:var(--white)}
 .divider{width:100%;height:1px;background:rgba(255,255,255,0.06);margin:0}
+
+/* ABOUT */
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
 .about-text p{color:var(--muted);margin-bottom:1rem;line-height:1.8}
 .about-text p strong{color:var(--white)}
@@ -47,11 +69,15 @@ h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);fon
 .stat-box{background:var(--steel);border:1px solid rgba(0,194,203,0.12);border-radius:4px;padding:1.25rem}
 .stat-num{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:var(--cyan)}
 .stat-label{font-size:0.8rem;color:var(--muted);margin-top:0.25rem}
+
+/* CERTS */
 .cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
 .cert-card{background:var(--steel);border:1px solid rgba(0,194,203,0.1);border-radius:4px;padding:1.25rem;transition:border-color 0.2s,transform 0.2s}
 .cert-card:hover{border-color:rgba(0,194,203,0.4);transform:translateY(-3px)}
 .cert-vendor{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.15em;color:var(--cyan-dim);text-transform:uppercase;margin-bottom:0.5rem}
 .cert-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.95rem;color:var(--white)}
+
+/* SKILLS */
 .skills-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem}
 .skill-group h3{font-family:'Space Grotesk',sans-serif;font-size:0.9rem;font-weight:600;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:1rem}
 .skill-item{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.85rem}
@@ -59,6 +85,8 @@ h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);fon
 .skill-bar{flex:1;height:3px;background:rgba(255,255,255,0.08);border-radius:2px;margin:0 1rem;overflow:hidden}
 .skill-fill{height:100%;background:var(--cyan);border-radius:2px}
 .skill-pct{font-family:var(--mono);font-size:0.72rem;color:var(--cyan-dim);min-width:2.5rem;text-align:right}
+
+/* TIMELINE */
 .timeline{position:relative;padding-left:2rem}
 .timeline::before{content:'';position:absolute;left:0;top:6px;bottom:0;width:1px;background:rgba(0,194,203,0.2)}
 .exp-item{position:relative;margin-bottom:3rem}
@@ -69,11 +97,13 @@ h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);fon
 .exp-desc{color:var(--muted);font-size:0.92rem;line-height:1.75;margin-top:0.75rem;list-style:none;padding:0}
 .exp-desc li{margin-bottom:0.4rem;padding-left:0.75rem;position:relative}
 .exp-desc li::before{content:'▸';position:absolute;left:0;color:var(--cyan-dim);font-size:0.75rem}
+
+/* TRAINING */
 .training-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
 .slideshow{position:relative;border-radius:6px;overflow:hidden;background:var(--steel);aspect-ratio:16/10}
 .slide{position:absolute;inset:0;opacity:0;transition:opacity 0.8s ease}
 .slide.active{opacity:1}
-.slide img{width:100%;height:100%;object-fit:cover}
+.slide img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
 .slide-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem;background:var(--steel);border:1px dashed rgba(0,194,203,0.2)}
 .slide-placeholder span{font-family:var(--mono);font-size:0.7rem;color:var(--dim);letter-spacing:0.1em}
 .slide-placeholder svg{width:36px;height:36px;stroke:var(--dim);fill:none;stroke-width:1.5}
@@ -89,6 +119,8 @@ h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);fon
 .story-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1rem;color:var(--white);margin-bottom:0.3rem}
 .story-audience{font-family:var(--mono);font-size:0.68rem;color:var(--cyan-dim);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem}
 .story-text{font-size:0.88rem;color:var(--muted);line-height:1.75}
+
+/* CONTACT */
 .contact-inner{text-align:center;padding:4rem 2rem}
 .contact-inner p{color:var(--muted);margin-bottom:2.5rem;font-size:1.05rem}
 .contact-links{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}
@@ -96,6 +128,7 @@ h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);fon
 .contact-link:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,194,203,0.07)}
 .contact-link svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
 footer{border-top:1px solid rgba(255,255,255,0.06);padding:2rem;text-align:center;color:var(--dim);font-family:var(--mono);font-size:0.72rem;letter-spacing:0.06em}
+
 @media(max-width:640px){
 .about-grid,.skills-wrapper,.stat-row,.training-layout{grid-template-columns:1fr}
 nav{padding:0.85rem 1rem}
@@ -105,6 +138,7 @@ h1{font-size:2.2rem}
 </style>
 </head>
 <body>
+
 <nav>
   <div class="nav-logo">MR</div>
   <ul class="nav-links">
@@ -117,9 +151,21 @@ h1{font-size:2.2rem}
 </nav>
 
 <div class="hero">
+  <!-- Background slideshow -->
+  <div class="hero-bg">
+    <div class="hero-bg-slide" style="background-image:url('photo1.jpg')"></div>
+    <div class="hero-bg-slide" style="background-image:url('photo2.jpg')"></div>
+    <div class="hero-bg-slide" style="background-image:url('photo3.jpg')"></div>
+    <div class="hero-bg-slide" style="background-image:url('photo4.jpg')"></div>
+    <div class="hero-bg-slide" style="background-image:url('photo5.jpg')"></div>
+    <div class="hero-bg-slide" style="background-image:url('photo6.jpg')"></div>
+    <div class="hero-bg-overlay"></div>
+  </div>
+
   <canvas id="net"></canvas>
+
   <div class="hero-inner">
-    <div class="hero-eyebrow">ISP ENTHUSIAST &amp; IT Trainer</div>
+    <div class="hero-eyebrow">Network Engineer &amp; IT Trainer</div>
     <h1>Md Mizanur <span class="accent">Rahman</span></h1>
     <p class="hero-sub">13+ years of progressive experience in ISP network operations and technical leadership. Currently channelling that expertise into the next generation — training network engineers and German language learners at PingBD, Chittagong.</p>
     <div class="hero-tags">
@@ -127,12 +173,21 @@ h1{font-size:2.2rem}
       <span class="tag">Cisco · MikroTik · Fortinet</span>
       <span class="tag">ISP Infrastructure</span>
       <span class="tag">Team Leadership</span>
-      <span class="tag">Trainer & Presenter</span>
+      <span class="tag">Trainer &amp; Presenter</span>
     </div>
     <div class="btn-row">
       <a href="#experience" class="btn btn-primary">View Experience</a>
       <a href="#contact" class="btn btn-outline">Get in Touch</a>
     </div>
+  </div>
+
+  <div class="hero-dots" id="heroDots">
+    <div class="hero-dot active"></div>
+    <div class="hero-dot"></div>
+    <div class="hero-dot"></div>
+    <div class="hero-dot"></div>
+    <div class="hero-dot"></div>
+    <div class="hero-dot"></div>
   </div>
 </div>
 
@@ -144,7 +199,7 @@ h1{font-size:2.2rem}
   <div class="about-grid">
     <div class="about-text">
       <p>I am a results-driven IT operations professional with <strong>13+ years</strong> of progressive experience in the ISP sector, specialising in technical support management, network operations, and customer experience delivery.</p>
-      <p>I built my career at <strong>Link3 Technologies Ltd.</strong>, rising from network monitoring to overseeing a distributed team of <strong>60+ support engineers</strong> across multiple zonal offices.</p>
+      <p>I built my career at <strong>Link3 Technologies Ltd.</strong>, rising from network monitoring engineer to Assistant Manager overseeing a distributed team of <strong>60+ support engineers</strong> across multiple zonal offices.</p>
       <p>Today I am based at <strong>PingBD</strong>, an IT training centre in Chittagong, where I deliver German language courses through <strong>DeutschRoute</strong> — a co-venture powered by PingBD — and am developing a structured <strong>CCNA training programme</strong> for their students.</p>
       <p>I am a multilingual communicator — fluent in Bengali and English, and proficient in <strong>German at B2 level</strong> — with a passion for knowledge sharing and technical education.</p>
     </div>
@@ -197,7 +252,6 @@ h1{font-size:2.2rem}
   <div class="section-label">// experience</div>
   <h2>Career Timeline</h2>
   <div class="timeline">
-
     <div class="exp-item">
       <div class="exp-role">Trainer &amp; Co-Founder</div>
       <div class="exp-org">PingBD / DeutschRoute — IT Training Centre, Chittagong</div>
@@ -209,7 +263,6 @@ h1{font-size:2.2rem}
         <li>Combine technical expertise and language skills to bridge IT and international professional development</li>
       </ul>
     </div>
-
     <div class="exp-item">
       <div class="exp-role">Assistant Manager — Complaint Management Team (CMT)</div>
       <div class="exp-org">Link3 Technologies Ltd.</div>
@@ -224,7 +277,6 @@ h1{font-size:2.2rem}
         <li>Served as key advisor in corporate procurement meetings involving software platforms and network hardware including vendor sessions with Nokia</li>
       </ul>
     </div>
-
     <div class="exp-item">
       <div class="exp-role">Senior Support Engineer — Field Support Team</div>
       <div class="exp-org">Link3 Technologies Ltd.</div>
@@ -236,7 +288,6 @@ h1{font-size:2.2rem}
         <li>Managed full decommissioning process post-migration including inventory handover and dismantling of EPON OLTs from BTS racks</li>
       </ul>
     </div>
-
     <div class="exp-item">
       <div class="exp-role">Support Engineer — Network Monitoring &amp; Technical Call Centre</div>
       <div class="exp-org">Link3 Technologies Ltd.</div>
@@ -248,7 +299,6 @@ h1{font-size:2.2rem}
         <li>Coordinated with internal teams to escalate and follow up on unresolved incidents for high-priority banking and corporate clients</li>
       </ul>
     </div>
-
   </div>
 </section>
 
@@ -258,37 +308,39 @@ h1{font-size:2.2rem}
   <div class="section-label">// training & presentations</div>
   <h2>Knowledge in Action</h2>
   <div class="training-layout">
-    <div class="slide active">
-          <img src="photo1.jpg" alt="Presentation photo" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
+    <div>
+      <div class="slideshow" id="slideshow">
+        <div class="slide active">
+          <img src="photo1.jpg" alt="Presentation photo 1">
         </div>
         <div class="slide">
           <div class="slide-placeholder">
             <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            <span>photo2.jpg</span>
+            <span>photo2.jpg — coming soon</span>
           </div>
         </div>
         <div class="slide">
           <div class="slide-placeholder">
             <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            <span>photo3.jpg</span>
+            <span>photo3.jpg — coming soon</span>
           </div>
         </div>
         <div class="slide">
           <div class="slide-placeholder">
             <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            <span>photo4.jpg</span>
+            <span>photo4.jpg — coming soon</span>
           </div>
         </div>
         <div class="slide">
           <div class="slide-placeholder">
             <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            <span>photo5.jpg</span>
+            <span>photo5.jpg — coming soon</span>
           </div>
         </div>
         <div class="slide">
           <div class="slide-placeholder">
             <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            <span>photo6.jpg</span>
+            <span>photo6.jpg — coming soon</span>
           </div>
         </div>
         <div class="slide-arrows">
@@ -296,7 +348,7 @@ h1{font-size:2.2rem}
           <button class="slide-arrow" onclick="changeSlide(1)">&#8594;</button>
         </div>
       </div>
-      <div class="slide-dots" id="dots">
+      <div class="slide-dots">
         <div class="dot active" onclick="goToSlide(0)"></div>
         <div class="dot" onclick="goToSlide(1)"></div>
         <div class="dot" onclick="goToSlide(2)"></div>
@@ -353,21 +405,47 @@ h1{font-size:2.2rem}
 <footer>Md Mizanur Rahman &nbsp;·&nbsp; Network Engineer &amp; Trainer &nbsp;·&nbsp; Chittagong, Bangladesh</footer>
 
 <script>
+// NETWORK CANVAS
 const canvas=document.getElementById('net');
 const ctx=canvas.getContext('2d');
 let W,H,nodes=[];
 const N=55;
 function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;}
 function init(){resize();nodes=Array.from({length:N},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-0.5)*0.45,vy:(Math.random()-0.5)*0.45,r:1.5+Math.random()*1.5}));}
-function draw(){ctx.clearRect(0,0,W,H);const D=130;for(let i=0;i<nodes.length;i++){for(let j=i+1;j<nodes.length;j++){const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y;const dist=Math.sqrt(dx*dx+dy*dy);if(dist<D){ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);ctx.strokeStyle=`rgba(0,194,203,${(1-dist/D)*0.35})`;ctx.lineWidth=0.7;ctx.stroke();}}}nodes.forEach(n=>{ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);ctx.fillStyle='rgba(0,194,203,0.7)';ctx.fill();n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>W)n.vx*=-1;if(n.y<0||n.y>H)n.vy*=-1;});requestAnimationFrame(draw);}
+function drawNet(){ctx.clearRect(0,0,W,H);const D=130;for(let i=0;i<nodes.length;i++){for(let j=i+1;j<nodes.length;j++){const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y;const dist=Math.sqrt(dx*dx+dy*dy);if(dist<D){ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);ctx.strokeStyle=`rgba(0,194,203,${(1-dist/D)*0.35})`;ctx.lineWidth=0.7;ctx.stroke();}}}nodes.forEach(n=>{ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);ctx.fillStyle='rgba(0,194,203,0.7)';ctx.fill();n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>W)n.vx*=-1;if(n.y<0||n.y>H)n.vy*=-1;});requestAnimationFrame(drawNet);}
 window.addEventListener('resize',resize);
-init();draw();
+init();drawNet();
 
+// SHOW NETWORK NODES IMMEDIATELY, START PHOTO SLIDESHOW AFTER 2s
+setTimeout(()=>{canvas.classList.add('visible');},100);
+
+// HERO BG SLIDESHOW
+const heroBgSlides=document.querySelectorAll('.hero-bg-slide');
+const heroDotEls=document.querySelectorAll('.hero-dot');
+let heroCurrent=0;
+
+function showHeroBg(n){
+  heroBgSlides[heroCurrent].classList.remove('active');
+  heroDotEls[heroCurrent].classList.remove('active');
+  heroCurrent=n;
+  heroBgSlides[heroCurrent].classList.add('active');
+  heroDotEls[heroCurrent].classList.add('active');
+}
+
+// Start hero bg after 2 seconds
+setTimeout(()=>{
+  showHeroBg(0);
+  setInterval(()=>{
+    showHeroBg((heroCurrent+1)%heroBgSlides.length);
+  },3000);
+},2000);
+
+// TRAINING SLIDESHOW
 let current=0;
-const slides=document.querySelectorAll('.slide');
+const slides=document.querySelectorAll('#slideshow .slide');
 const dots=document.querySelectorAll('.dot');
 const stories=document.querySelectorAll('.story-item');
-let timer=setInterval(()=>changeSlide(1),4000);
+let timer=setInterval(()=>changeSlide(1),3000);
 
 function goToSlide(n){
   slides[current].classList.remove('active');
@@ -378,11 +456,10 @@ function goToSlide(n){
   dots[current].classList.add('active');
   stories[current%stories.length].classList.add('active');
 }
-
 function changeSlide(dir){
   clearInterval(timer);
   goToSlide((current+dir+slides.length)%slides.length);
-  timer=setInterval(()=>changeSlide(1),4000);
+  timer=setInterval(()=>changeSlide(1),3000);
 }
 </script>
 </body>
